@@ -1,14 +1,14 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
 
 export function useHeaderTitle(initialTitle: string) {
-    const [ title, setTitle ] = useState(initialTitle);
+    const [title, setTitle] = useState(initialTitle);
     const navigation = useNavigation();
 
     React.useLayoutEffect(() => {
         navigation.setOptions({
-            title 
+            title
         });
-      }, [navigation, title]);
+    }, [navigation, title]);
     return [title, setTitle];
 }

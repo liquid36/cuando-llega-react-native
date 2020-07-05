@@ -1,4 +1,4 @@
-import { db as data } from './data'
+import { db as data } from './data';
 
 export interface Colectivo {
     value: string;
@@ -16,10 +16,10 @@ export interface Calle {
 
 export function getColectivos(calleId?: string, interseccionId?: string) {
     const colectivosMap: { [key: string]: Colectivo } = {};
-    
+
     data.forEach((element: any) => {
         if (calleId && interseccionId) {
-            if (calleId !== element.calle_id  || interseccionId !== element.interseccion_id) {
+            if (calleId !== element.calle_id || interseccionId !== element.interseccion_id) {
                 return;
             }
         }
@@ -35,18 +35,17 @@ export function getColectivos(calleId?: string, interseccionId?: string) {
             name: element.colectivo_name,
             bandera: new Set<string>([element.bandera])
         };
-    
     });
-    return Object.values(colectivosMap)
+    return Object.values(colectivosMap);
 }
 
 export interface GetCalleParams {
-    colectivoId?: string,
-    calleId?: string
+    colectivoId?: string;
+    calleId?: string;
 }
-export function getCalles({ colectivoId , calleId }: GetCalleParams = {}) {
+export function getCalles({ colectivoId, calleId }: GetCalleParams = {}) {
     const callesMap: { [key: string]: Calle } = {};
-    
+
     data.forEach((element: any) => {
         const { colectivo_idLinea, calle_id } = element;
         if (colectivoId && colectivo_idLinea !== colectivoId) {
@@ -60,19 +59,17 @@ export function getCalles({ colectivoId , calleId }: GetCalleParams = {}) {
         const idKey = prefix + '_id';
         const nameKey = prefix + '_name';
         const ciudadKey = prefix + '_city';
- 
 
-        const mapping = callesMap[element[idKey]]; 
-        if (mapping) { 
+        const mapping = callesMap[element[idKey]];
+        if (mapping) {
             return;
         }
-        callesMap[element[idKey]] = { 
+        callesMap[element[idKey]] = {
             id: element[idKey],
             nombre: element[nameKey],
             ciudad: element[ciudadKey]
         };
-    
-    }); 
+    });
     return Object.values(callesMap).sort((a, b) => {
         return a.nombre.localeCompare(b.nombre);
     });
